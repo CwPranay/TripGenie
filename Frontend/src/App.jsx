@@ -10,12 +10,16 @@ import Login from "./pages/Login";
 import Register from "./pages/Register";
 import Dashboard from "./pages/Dashboard";
 import Upload from "./pages/Upload";
+import SharePage
+  from "./pages/SharePage";
+  import Navbar
+from "./components/Navbar";
 
 function App() {
 
   return (
     <BrowserRouter>
-
+       <Navbar />
       <Routes>
 
         <Route
@@ -51,6 +55,10 @@ function App() {
               <ItineraryDetail />
             </ProtectedRoute>
           }
+        />
+        <Route
+          path="/share/:shareId"
+          element={<SharePage />}
         />
       </Routes>
 

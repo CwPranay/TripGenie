@@ -1,27 +1,23 @@
 import { useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
 
 import API from "../api/axios";
 
-import { useAuth }
-from "../context/AuthContext";
-
-import { useNavigate }
-from "react-router-dom";
+import { useAuth } from "../context/AuthContext";
 
 const Login = () => {
-
   const navigate = useNavigate();
 
   const { login } = useAuth();
 
-  const [formData, setFormData] =
-    useState({
-      email: "",
-      password: "",
-    });
+  const [loading, setLoading] = useState(false);
+
+  const [formData, setFormData] = useState({
+    email: "",
+    password: "",
+  });
 
   const handleChange = (e) => {
-
     setFormData({
       ...formData,
       [e.target.name]: e.target.value,
@@ -29,10 +25,10 @@ const Login = () => {
   };
 
   const handleSubmit = async (e) => {
-
     e.preventDefault();
 
     try {
+      setLoading(true);
 
       const { data } = await API.post(
         "/auth/login",
@@ -42,49 +38,87 @@ const Login = () => {
       login(data);
 
       navigate("/dashboard");
-
     } catch (error) {
-
       console.log(error);
+    } finally {
+      setLoading(false);
     }
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center">
+    <div className="min-h-screen bg-gray-50/60 flex items-center justify-center px-6">
+      <div className="w-full max-w-md">
+        <div className="rounded-3xl border border-gray-100 bg-white shadow-sm overflow-hidden">
+          <div className="h-1.5 w-full bg-sky-400" />
 
-      <form
-        onSubmit={handleSubmit}
-        className="w-full max-w-md p-6 rounded-xl shadow-lg space-y-4"
-      >
+          <div className="p-8">
+            <div className="mb-8">
+              <h1 className="text-3xl font-semibold tracking-tight text-gray-900">
+                Welcome Back
+              </h1>
 
-        <h1 className="text-3xl font-bold">
-          Login
-        </h1>
+              <p className="mt-2 text-sm text-gray-500">
+                Login to continue planning your trips with AI.
+              </p>
+            </div>
 
-        <input
-          type="email"
-          name="email"
-          placeholder="Email"
-          onChange={handleChange}
-          className="w-full border p-3 rounded-lg"
-        />
+            <form
+              onSubmit={handleSubmit}
+              className="space-y-5"
+            >
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-2">
+                  Email
+                </label>
 
-        <input
-          type="password"
-          name="password"
-          placeholder="Password"
-          onChange={handleChange}
-          className="w-full border p-3 rounded-lg"
-        />
+                <input
+                  type="email"
+                  name="email"
+                  placeholder="Enter your email"
+                  onChange={handleChange}
+                  value={formData.email}
+                  required
+                  className="w-full rounded-xl border border-gray-200 bg-white px-4 py-3 text-sm outline-none transition focus:border-indigo-400 focus:ring-4 focus:ring-indigo-100"
+                />
+              </div>
 
-        <button
-          className="w-full bg-black text-white p-3 rounded-lg"
-        >
-          Login
-        </button>
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-2">
+                  Password
+                </label>
 
-      </form>
+                <input
+                  type="password"
+                  name="password"
+                  placeholder="Enter your password"
+                  onChange={handleChange}
+                  value={formData.password}
+                  required
+                  className="w-full rounded-xl border border-gray-200 bg-white px-4 py-3 text-sm outline-none transition focus:border-indigo-400 focus:ring-4 focus:ring-indigo-100"
+                />
+              </div>
 
+              <button
+                type="submit"
+                disabled={loading}
+                className="w-full rounded-xl bg-gray-900 px-4 py-3 text-sm font-medium text-white transition hover:bg-gray-700 active:scale-[0.98] disabled:opacity-70"
+              >
+                {loading ? "Logging in..." : "Login"}
+              </button>
+            </form>
+
+            <div className="mt-6 text-center text-sm text-gray-500">
+              Not a user yet?{" "}
+              <Link
+                to="/register"
+                className="font-medium text-indigo-600 hover:text-indigo-500"
+              >
+                Create Account
+              </Link>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
   );
 };

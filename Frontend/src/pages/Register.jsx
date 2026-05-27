@@ -2,27 +2,24 @@ import { useState } from "react";
 
 import API from "../api/axios";
 
-import { useAuth }
-from "../context/AuthContext";
+import { useAuth } from "../context/AuthContext";
 
-import { useNavigate }
-from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 const Register = () => {
-
   const navigate = useNavigate();
 
   const { login } = useAuth();
 
-  const [formData, setFormData] =
-    useState({
-        name:"",
-      email: "",
-      password: "",
-    });
+  const [loading, setLoading] = useState(false);
+
+  const [formData, setFormData] = useState({
+    name: "",
+    email: "",
+    password: "",
+  });
 
   const handleChange = (e) => {
-
     setFormData({
       ...formData,
       [e.target.name]: e.target.value,
@@ -30,10 +27,10 @@ const Register = () => {
   };
 
   const handleSubmit = async (e) => {
-
     e.preventDefault();
 
     try {
+      setLoading(true);
 
       const { data } = await API.post(
         "/auth/register",
@@ -43,56 +40,103 @@ const Register = () => {
       login(data);
 
       navigate("/dashboard");
-
     } catch (error) {
-
       console.log(error);
+    } finally {
+      setLoading(false);
     }
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center">
+    <div className="min-h-screen bg-gray-50/60 flex items-center justify-center px-6">
+      <div className="w-full max-w-md">
+        <div className="rounded-3xl border border-gray-100 bg-white shadow-sm overflow-hidden">
+          <div className="h-1.5 w-full bg-sky-400 " />
 
-      <form
-        onSubmit={handleSubmit}
-        className="w-full max-w-md p-6 rounded-xl shadow-lg space-y-4"
-      >
+          <div className="p-8">
+            <div className="mb-8">
+              <h1 className="text-3xl font-semibold tracking-tight text-gray-900">
+                Create Account
+              </h1>
 
-        <h1 className="text-3xl font-bold">
-          Register
-        </h1>
-        <input
-          type="text"
-          name="name"
-          placeholder="Name"
-          onChange={handleChange}
-          className="w-full border p-3 rounded-lg"
-        />
-        <input
-          type="email"
-          name="email"
-          placeholder="Email"
-          onChange={handleChange}
-          className="w-full border p-3 rounded-lg"
-        />
+              <p className="mt-2 text-sm text-gray-500">
+                Start generating AI-powered travel itineraries.
+              </p>
+            </div>
 
-        <input
-          type="password"
-          name="password"
-          placeholder="Password"
-          onChange={handleChange}
-          className="w-full border p-3 rounded-lg"
-        />
+            <form
+              onSubmit={handleSubmit}
+              className="space-y-5"
+            >
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-2">
+                  Full Name
+                </label>
 
-        <button
-          className="w-full bg-black text-white p-3 rounded-lg"
-        >
-          Register
-        </button>
-        <p>already registerd ? <a href="/login">click to login</a></p> 
+                <input
+                  type="text"
+                  name="name"
+                  placeholder="Enter your name"
+                  onChange={handleChange}
+                  value={formData.name}
+                  required
+                  className="w-full rounded-xl border border-gray-200 bg-white px-4 py-3 text-sm outline-none transition focus:border-indigo-400 focus:ring-4 focus:ring-indigo-100"
+                />
+              </div>
 
-      </form>
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-2">
+                  Email
+                </label>
 
+                <input
+                  type="email"
+                  name="email"
+                  placeholder="Enter your email"
+                  onChange={handleChange}
+                  value={formData.email}
+                  required
+                  className="w-full rounded-xl border border-gray-200 bg-white px-4 py-3 text-sm outline-none transition focus:border-indigo-400 focus:ring-4 focus:ring-indigo-100"
+                />
+              </div>
+
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-2">
+                  Password
+                </label>
+
+                <input
+                  type="password"
+                  name="password"
+                  placeholder="Create password"
+                  onChange={handleChange}
+                  value={formData.password}
+                  required
+                  className="w-full rounded-xl border border-gray-200 bg-white px-4 py-3 text-sm outline-none transition focus:border-indigo-400 focus:ring-4 focus:ring-indigo-100"
+                />
+              </div>
+
+              <button
+                type="submit"
+                disabled={loading}
+                className="w-full rounded-xl bg-gray-900 px-4 py-3 text-sm font-medium text-white transition hover:bg-gray-700 active:scale-[0.98] disabled:opacity-70"
+              >
+                {loading ? "Creating Account..." : "Register"}
+              </button>
+            </form>
+
+            <div className="mt-6 text-center text-sm text-gray-500">
+              Already registered?{" "}
+              <Link
+                to="/login"
+                className="font-medium text-indigo-600 hover:text-indigo-500"
+              >
+                Login here
+              </Link>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
   );
 };

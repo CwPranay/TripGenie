@@ -1,7 +1,6 @@
 const GEMINI_API_URL =
   "https://generativelanguage.googleapis.com/v1beta/models/gemini-3.1-flash-lite:generateContent";
 
-
 const callGemini = async (prompt) => {
 
   const response = await fetch(
@@ -40,10 +39,6 @@ if (!data.candidates) {
 return data.candidates[0].content.parts[0].text;
 };
 
-
-
-
-// EXTRACT STRUCTURED DATA
 export const extractTravelData = async (text) => {
   try {
 
@@ -83,10 +78,6 @@ ${text}
   }
 };
 
-
-
-
-// GENERATE ITINERARY
 export const generateItinerary = async (
   structuredData
 ) => {

@@ -35,7 +35,6 @@ export const uploadFile = async (req, res) => {
             });
         }
 
-        // AI EXTRACTION
         const structuredData =
             await extractTravelData(extractedText);
 
@@ -45,7 +44,6 @@ export const uploadFile = async (req, res) => {
             });
         }
 
-        // AI ITINERARY
         const itinerary =
             await generateItinerary(structuredData);
         

@@ -23,17 +23,8 @@ const UploadIcon = () => (
 );
 
 const ArrowLeftIcon = () => (
-  <svg
-    xmlns="http://www.w3.org/2000/svg"
-    viewBox="0 0 24 24"
-    fill="currentColor"
-    className="w-4 h-4"
-  >
-    <path
-      fillRule="evenodd"
-      d="M11.03 3.97a.75.75 0 010 1.06l-6.22 6.22H21a.75.75 0 010 1.5H4.81l6.22 6.22a.75.75 0 11-1.06 1.06l-7.5-7.5a.75.75 0 010-1.06l7.5-7.5a.75.75 0 011.06 0z"
-      clipRule="evenodd"
-    />
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="w-4 h-4">
+    <path fillRule="evenodd" d="M11.03 3.97a.75.75 0 010 1.06l-6.22 6.22H21a.75.75 0 010 1.5H4.81l6.22 6.22a.75.75 0 11-1.06 1.06l-7.5-7.5a.75.75 0 010-1.06l7.5-7.5a.75.75 0 011.06 0z" clipRule="evenodd" />
   </svg>
 );
 
@@ -52,28 +43,109 @@ const SparklesIcon = () => (
   </svg>
 );
 
-const PlusIcon = () => (
-  <svg
-    xmlns="http://www.w3.org/2000/svg"
-    viewBox="0 0 24 24"
-    fill="currentColor"
-    className="w-5 h-5"
-  >
-    <path
-      fillRule="evenodd"
-      d="M12 3.75a.75.75 0 01.75.75v6.75h6.75a.75.75 0 010 1.5h-6.75v6.75a.75.75 0 01-1.5 0v-6.75H4.5a.75.75 0 010-1.5h6.75V4.5a.75.75 0 01.75-.75z"
-      clipRule="evenodd"
-    />
+const CalendarIcon = () => (
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="w-4 h-4">
+    <path fillRule="evenodd" d="M6.75 2.25A.75.75 0 017.5 3v1.5h9V3A.75.75 0 0118 3v1.5h.75a3 3 0 013 3v11.25a3 3 0 01-3 3H5.25a3 3 0 01-3-3V7.5a3 3 0 013-3H6V3a.75.75 0 01.75-.75zm13.5 9a1.5 1.5 0 00-1.5-1.5H5.25a1.5 1.5 0 00-1.5 1.5v7.5a1.5 1.5 0 001.5 1.5h13.5a1.5 1.5 0 001.5-1.5v-7.5z" clipRule="evenodd" />
   </svg>
 );
 
+const PlaneIcon = () => (
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="w-4 h-4">
+    <path d="M3.478 2.405a.75.75 0 00-.926.94l2.432 7.905H13.5a.75.75 0 010 1.5H4.984l-2.432 7.905a.75.75 0 00.926.94 60.519 60.519 0 0018.445-8.986.75.75 0 000-1.218A60.517 60.517 0 003.478 2.405z" />
+  </svg>
+);
+
+const HotelIcon = () => (
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="w-4 h-4">
+    <path d="M11.584 2.376a.75.75 0 01.832 0l9 6a.75.75 0 11-.832 1.248L12 3.901 3.416 9.624a.75.75 0 01-.832-1.248l9-6z" />
+    <path fillRule="evenodd" d="M20.25 10.332v9.918H21a.75.75 0 010 1.5H3a.75.75 0 010-1.5h.75v-9.918a.75.75 0 01.634-.74A49.109 49.109 0 0112 9c2.59 0 5.134.202 7.616.592a.75.75 0 01.634.74zm-7.5 2.418a.75.75 0 00-1.5 0v6.75a.75.75 0 001.5 0v-6.75zm3-.75a.75.75 0 01.75.75v6.75a.75.75 0 01-1.5 0v-6.75a.75.75 0 01.75-.75zM9 12.75a.75.75 0 00-1.5 0v6.75a.75.75 0 001.5 0v-6.75z" clipRule="evenodd" />
+  </svg>
+);
+
+const PlusIcon = () => (
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="w-5 h-5">
+    <path fillRule="evenodd" d="M12 3.75a.75.75 0 01.75.75v6.75h6.75a.75.75 0 010 1.5h-6.75v6.75a.75.75 0 01-1.5 0v-6.75H4.5a.75.75 0 010-1.5h6.75V4.5a.75.75 0 01.75-.75z" clipRule="evenodd" />
+  </svg>
+);
+
+const formatDate = (raw) => {
+  if (!raw) return null;
+  try {
+    return new Date(raw).toLocaleDateString("en-US", {
+      weekday: "long", month: "long", day: "numeric", year: "numeric",
+    });
+  } catch { return raw; }
+};
+
+const DetailRow = ({ icon: Icon, label, value, accent }) => {
+  if (!value) return null;
+  return (
+    <div className={`flex items-start gap-3 rounded-xl p-4 ${accent}`}>
+      <span className="mt-0.5 text-sky-600">
+        <Icon />
+      </span>
+      <div className="min-w-0">
+        <p className="text-xs font-semibold text-gray-500 uppercase tracking-wide mb-1">{label}</p>
+        <p className="text-sm font-medium text-gray-900 leading-snug">{value}</p>
+      </div>
+    </div>
+  );
+};
+
+const mdComponents = {
+  h1: ({ children }) => (
+    <h1 className="text-2xl font-bold text-gray-900 mt-8 mb-4 first:mt-0 pb-3 border-b-2 border-indigo-100">{children}</h1>
+  ),
+  h2: ({ children }) => (
+    <h2 className="text-xl font-bold text-gray-900 mt-8 mb-3 first:mt-0 flex items-center gap-2.5">
+      <span className="inline-block h-2 w-2 rounded-full bg-indigo-500 flex-shrink-0" />
+      {children}
+    </h2>
+  ),
+  h3: ({ children }) => (
+    <h3 className="text-lg font-semibold text-gray-800 mt-6 mb-2.5 flex items-center gap-2">
+      <span className="inline-block h-1.5 w-1.5 rounded-full bg-sky-400 flex-shrink-0" />
+      {children}
+    </h3>
+  ),
+  p: ({ children }) => (
+    <p className="text-sm text-gray-700 leading-relaxed mb-4">{children}</p>
+  ),
+  ul: ({ children }) => (
+    <ul className="space-y-2 mb-5 ml-1">{children}</ul>
+  ),
+  ol: ({ children }) => (
+    <ol className="space-y-2 mb-5 ml-1 list-decimal list-inside">{children}</ol>
+  ),
+  li: ({ children }) => (
+    <li className="flex items-start gap-2.5 text-sm text-gray-700 leading-relaxed pl-1">
+      <span className="mt-2 h-1.5 w-1.5 rounded-full bg-indigo-400 flex-shrink-0" />
+      <span className="flex-1">{children}</span>
+    </li>
+  ),
+  strong: ({ children }) => (
+    <strong className="font-semibold text-gray-900">{children}</strong>
+  ),
+  em: ({ children }) => (
+    <em className="italic text-gray-600">{children}</em>
+  ),
+  hr: () => <hr className="my-8 border-gray-200" />,
+  blockquote: ({ children }) => (
+    <blockquote className="border-l-4 border-indigo-300 bg-indigo-50 pl-4 py-3 my-5 text-sm text-gray-700 italic rounded-r-lg">
+      {children}
+    </blockquote>
+  ),
+  code: ({ children }) => (
+    <code className="bg-gray-100 text-indigo-600 px-1.5 py-0.5 rounded text-xs font-mono">
+      {children}
+    </code>
+  ),
+};
+
 const Upload = () => {
   const [loading, setLoading] = useState(false);
-
   const [result, setResult] = useState(null);
-
   const [uploadedFile, setUploadedFile] = useState(null);
-
   const navigate = useNavigate();
 
   const onDrop = useCallback(async (acceptedFiles) => {
@@ -82,8 +154,6 @@ const Upload = () => {
     if (!file) return;
 
     setUploadedFile(file);
-
-    setResult(null);
 
     const formData = new FormData();
 
@@ -98,7 +168,7 @@ const Upload = () => {
         },
       });
 
-      setResult(data);
+      setResult(data.itinerary);
     } catch (error) {
       console.log("Upload Error:", error);
     } finally {
@@ -106,47 +176,48 @@ const Upload = () => {
     }
   }, []);
 
-  const resetUpload = () => {
-    setUploadedFile(null);
-    setResult(null);
-    setLoading(false);
-  };
-
   const { getRootProps, getInputProps, isDragActive } = useDropzone({
     onDrop,
     multiple: false,
+    disabled: loading,
   });
+
+  const handleNewUpload = () => {
+    setResult(null);
+    setUploadedFile(null);
+  };
+
+  const destination = result?.structuredData?.destination;
+  const startDate = formatDate(result?.structuredData?.startDate);
 
   return (
     <div className="min-h-screen bg-gray-50/60">
-      <main className="mx-auto max-w-7xl px-6 py-10">
+      <main className="mx-auto max-w-4xl px-6 py-10">
         <button
           onClick={() => navigate(-1)}
-          className="inline-flex items-center cursor-pointer gap-1.5 text-sm text-gray-900 hover:text-gray-700 transition-colors duration-150 mb-6"
+          className="inline-flex items-center cursor-pointer gap-1.5 text-sm text-gray-600 hover:text-gray-900 transition-colors duration-150 mb-2 group"
         >
           <ArrowLeftIcon />
-          Back to trips
+          <span className="group-hover:underline">Back to trips</span>
         </button>
 
-        <div className="mb-10">
-          <h1 className="text-3xl font-semibold tracking-tight text-gray-900">
-            Upload Booking
-          </h1>
+        {!result && !loading && (
+          <>
+            <div className="mb-10 mt-6">
+              <h1 className="text-3xl font-bold tracking-tight text-gray-900">
+                Upload Booking
+              </h1>
 
-          <p className="mt-2 text-sm text-gray-500 max-w-2xl leading-relaxed">
-            Upload your travel booking or reservation and generate a clean,
-            AI-powered itinerary instantly.
-          </p>
-        </div>
+              <p className="mt-2 text-sm text-gray-500 max-w-lg leading-relaxed">
+                Upload your flight ticket, hotel booking, or travel document and
+                let AI generate a beautiful itinerary for your trip.
+              </p>
+            </div>
 
-        <div className="grid gap-6 lg:grid-cols-[1fr_340px]">
-          {/* LEFT SIDE */}
-          <div className="rounded-3xl border border-gray-100 bg-white shadow-sm overflow-hidden">
-            <div className="h-1.5 w-full bg-sky-400" />
+            <div className="rounded-3xl border border-gray-100 bg-white shadow-sm overflow-hidden">
+              <div className="h-1.5 w-full bg-sky-400 " />
 
-            <div className="p-8">
-              {/* Upload State */}
-              {!result && (
+              <div className="p-8">
                 <div
                   {...getRootProps()}
                   className={`
@@ -154,10 +225,7 @@ const Upload = () => {
                     border-2
                     border-dashed
                     rounded-3xl
-                    min-h-[420px]
-                    flex
-                    items-center
-                    justify-center
+                    p-16
                     text-center
                     cursor-pointer
                     transition-all
@@ -172,185 +240,158 @@ const Upload = () => {
                 >
                   <input {...getInputProps()} />
 
-                  <div className="flex flex-col items-center px-6">
-                    {!loading ? (
-                      <>
-                        <div
-                          className={`
-                            flex items-center justify-center
-                            w-24 h-24
-                            rounded-3xl
-                            mb-8
-                            transition
-                            ${
-                              isDragActive
-                                ? "bg-indigo-100 text-indigo-600"
-                                : "bg-gray-100 text-gray-500 group-hover:bg-indigo-100 group-hover:text-indigo-600"
-                            }
-                          `}
-                        >
-                          <UploadIcon />
-                        </div>
-
-                        <h2 className="text-2xl font-semibold text-gray-900 mb-3">
-                          {isDragActive
-                            ? "Drop your file here"
-                            : "Upload travel document"}
-                        </h2>
-
-                        <p className="text-sm text-gray-500 max-w-md leading-relaxed">
-                          Upload your flight ticket, hotel reservation,
-                          booking screenshot, or travel PDF and let AI
-                          generate a personalized itinerary.
-                        </p>
-
-                        <div className="mt-6 inline-flex items-center rounded-full bg-gray-100 px-4 py-2 text-xs font-medium text-gray-600">
-                          PDF • JPG • PNG
-                        </div>
-
-                        {uploadedFile && (
-                          <div className="mt-6 rounded-2xl bg-indigo-50 px-5 py-4 text-sm text-indigo-700 border border-indigo-100">
-                            Selected File:{" "}
-                            <span className="font-semibold">
-                              {uploadedFile.name}
-                            </span>
-                          </div>
-                        )}
-                      </>
-                    ) : (
-                      <div className="flex flex-col items-center">
-                        <div className="h-14 w-14 animate-spin rounded-full border-4 border-indigo-500 border-t-transparent mb-6" />
-
-                        <h2 className="text-2xl font-semibold text-gray-900 mb-2">
-                          Generating itinerary...
-                        </h2>
-
-                        <p className="text-sm text-gray-500 max-w-sm leading-relaxed">
-                          AI is analyzing your travel document and creating
-                          a personalized travel plan.
-                        </p>
-
-                        {uploadedFile && (
-                          <div className="mt-6 rounded-2xl bg-gray-100 px-5 py-4 text-sm text-gray-700">
-                            {uploadedFile.name}
-                          </div>
-                        )}
-                      </div>
-                    )}
-                  </div>
-                </div>
-              )}
-
-              {/* RESULT */}
-              {result && (
-                <div className="space-y-6">
-                  {/* HEADER */}
-                  <div className="rounded-3xl border border-gray-100 bg-gray-50 p-6">
-                    <div className="flex items-start justify-between gap-4 flex-wrap">
-                      <div>
-                        <div className="inline-flex items-center gap-2 rounded-full bg-indigo-100 text-indigo-700 px-3 py-1 text-xs font-medium mb-4">
-                          <SparklesIcon />
-                          AI Generated Itinerary
-                        </div>
-
-                        <h2 className="text-3xl font-semibold text-gray-900 tracking-tight">
-                          {result?.structuredData?.destination ||
-                            "Untitled Trip"}
-                        </h2>
-
-                        <p className="mt-3 text-sm text-gray-500 leading-relaxed max-w-2xl">
-                          Your personalized AI travel itinerary is ready.
-                        </p>
-                      </div>
-                    </div>
-                  </div>
-
-                  {/* ITINERARY */}
-                  <div className="rounded-3xl border border-gray-100 bg-white p-8 shadow-sm">
-                    <div className="prose prose-sm sm:prose lg:prose-lg max-w-none prose-headings:text-gray-900 prose-p:text-gray-600 prose-strong:text-gray-900 prose-li:text-gray-600">
-                      <ReactMarkdown>
-                        {result?.itinerary?.itinerary || ""}
-                      </ReactMarkdown>
-                    </div>
-                  </div>
-                </div>
-              )}
-            </div>
-          </div>
-
-          {/* RIGHT SIDE */}
-          <div className="space-y-6">
-            <div className="rounded-3xl border border-gray-100 bg-white shadow-sm overflow-hidden">
-              <div className="h-1.5 w-full bg-indigo-400" />
-
-              <div className="p-6">
-                <div className="flex items-center gap-2 mb-5">
-                  <div className="flex h-11 w-11 items-center justify-center rounded-2xl bg-indigo-100 text-indigo-600">
-                    <PlusIcon />
-                  </div>
-
-                  <div>
-                    <h3 className="text-lg font-semibold text-gray-900">
-                      Upload New
-                    </h3>
-
-                    <p className="text-sm text-gray-500">
-                      Generate another itinerary
-                    </p>
-                  </div>
-                </div>
-
-                <div
-                  {...getRootProps()}
-                  className="border-2 border-dashed border-gray-200 rounded-2xl p-8 text-center cursor-pointer hover:border-indigo-300 hover:bg-gray-50 transition-all duration-200"
-                >
-                  <input {...getInputProps()} />
-
                   <div className="flex flex-col items-center">
-                    <div className="flex items-center justify-center w-14 h-14 rounded-2xl bg-gray-100 text-gray-600 mb-4">
+                    <div
+                      className={`
+                        flex items-center justify-center
+                        w-20 h-20
+                        rounded-2xl
+                        mb-6
+                        transition
+                        ${
+                          isDragActive
+                            ? "bg-indigo-100 text-indigo-600"
+                            : "bg-gray-100 text-gray-500 group-hover:bg-indigo-100 group-hover:text-indigo-600"
+                        }
+                      `}
+                    >
                       <UploadIcon />
                     </div>
 
-                    <h4 className="text-sm font-semibold text-gray-900 mb-2">
-                      Upload another file
-                    </h4>
+                    <h2 className="text-xl font-semibold text-gray-900 mb-2">
+                      {isDragActive
+                        ? "Drop your file here"
+                        : "Upload travel document"}
+                    </h2>
 
-                    <p className="text-xs text-gray-500 leading-relaxed">
-                      Drag & drop or click here
+                    <p className="text-sm text-gray-500 max-w-md leading-relaxed">
+                      Drag & drop your PDF, booking screenshot, hotel reservation,
+                      or travel image here.
                     </p>
+
+                    <div className="mt-6 inline-flex items-center rounded-full bg-gray-100 px-4 py-2 text-xs font-medium text-gray-600">
+                      PDF • JPG • PNG
+                    </div>
                   </div>
                 </div>
+              </div>
+            </div>
+          </>
+        )}
 
-                {result && (
+        {loading && (
+          <div className="mt-6 space-y-6">
+            <div className="rounded-3xl border border-gray-100 bg-white shadow-sm overflow-hidden">
+              <div className="h-1.5 w-full bg-sky-400 " />
+
+              <div className="p-8">
+                <div className="flex flex-col items-center justify-center py-16">
+                  <div className="h-16 w-16 animate-spin rounded-full border-4 border-sky-500 border-t-transparent mb-6" />
+
+                  <h2 className="text-2xl font-semibold text-gray-900 mb-2">
+                    Generating AI itinerary...
+                  </h2>
+
+                  <p className="text-sm text-gray-500 max-w-md text-center leading-relaxed">
+                    Analyzing your travel document and creating a personalized travel plan
+                  </p>
+
+                  {uploadedFile && (
+                    <div className="mt-6 rounded-xl bg-indigo-50 px-4 py-3 text-sm text-indigo-700 border border-indigo-100">
+                      Processing: <span className="font-medium">{uploadedFile.name}</span>
+                    </div>
+                  )}
+                </div>
+              </div>
+            </div>
+          </div>
+        )}
+
+        {result && (
+          <div className="space-y-6 mt-6">
+            <div className="rounded-3xl border border-gray-200 bg-white shadow-lg overflow-hidden">
+              <div className="h-32 bg-sky-500 relative">
+                <div className="absolute inset-0 bg-black/5" />
+                <div className="absolute bottom-0 left-0 right-0 p-8 pb-6 flex items-end justify-between">
+                  <div>
+                    <div className="inline-flex items-center gap-2 rounded-full bg-white/20 backdrop-blur-sm px-3 py-1 text-xs font-medium text-white mb-3 border border-white/30">
+                      <SparklesIcon />
+                      AI Generated Itinerary
+                    </div>
+                    <h1 className="text-3xl font-bold tracking-tight text-white leading-tight drop-shadow-lg">
+                      {destination ?? "Untitled Trip"}
+                    </h1>
+                  </div>
                   <button
-                    onClick={resetUpload}
-                    className="w-full mt-5 rounded-2xl bg-gray-900 px-4 py-3 text-sm font-medium text-white hover:bg-gray-700 transition-all duration-150"
+                    onClick={handleNewUpload}
+                    className="inline-flex items-center gap-2 rounded-lg bg-white px-4 py-2.5 text-sm font-medium text-gray-900 hover:bg-gray-50 active:scale-95 transition-all duration-150 shadow-sm"
                   >
-                    Clear Current Trip
+                    <PlusIcon />
+                    New Upload
                   </button>
-                )}
+                </div>
+              </div>
+              
+              <div className="p-8 pt-6">
+                <div className="flex flex-wrap items-center gap-3">
+                  {startDate && (
+                    <div className="flex items-center gap-2 text-sm text-gray-600 bg-gray-50 rounded-lg px-3 py-2">
+                      <CalendarIcon />
+                      <span className="font-medium">{startDate}</span>
+                    </div>
+                  )}
+                </div>
               </div>
             </div>
 
-            {uploadedFile && (
-              <div className="rounded-3xl border border-gray-100 bg-white p-6 shadow-sm">
-                <h3 className="text-lg font-semibold text-gray-900 mb-4">
-                  Uploaded File
-                </h3>
-
-                <div className="rounded-2xl bg-gray-50 p-4 border border-gray-100">
-                  <p className="text-sm font-medium text-gray-800 break-all">
-                    {uploadedFile.name}
-                  </p>
-
-                  <p className="text-xs text-gray-500 mt-2">
-                    {(uploadedFile.size / 1024 / 1024).toFixed(2)} MB
-                  </p>
+            <div className="rounded-3xl border border-gray-200 bg-white shadow-lg p-8">
+              <div className="flex items-center gap-3 mb-6 pb-4 border-b border-gray-100">
+                <span className="flex h-10 w-10 items-center justify-center rounded-xl bg-sky-500 text-white shadow-sm">
+                  <CalendarIcon />
+                </span>
+                <div>
+                  <h2 className="text-lg font-bold text-gray-900">Trip Details</h2>
+                  <p className="text-xs text-gray-500">Essential information</p>
                 </div>
               </div>
-            )}
+
+              <div className="grid sm:grid-cols-2 gap-4">
+                <DetailRow
+                  icon={PlaneIcon}
+                  label="Flight"
+                  value={result.structuredData?.flight}
+                  accent="bg-sky-50 border border-sky-100"
+                />
+                <DetailRow
+                  icon={HotelIcon}
+                  label="Hotel"
+                  value={result.structuredData?.hotel || "Not specified"}
+                  accent="bg-indigo-50 border border-indigo-100"
+                />
+              </div>
+            </div>
+
+            <div className="rounded-3xl border border-gray-200 bg-white shadow-lg p-8">
+              <div className="flex items-center gap-3 mb-8 pb-4 border-b border-gray-100">
+                <span className="flex h-10 w-10 items-center justify-center rounded-xl bg-sky-500 text-white shadow-sm">
+                  <SparklesIcon />
+                </span>
+                <div>
+                  <h2 className="text-lg font-bold text-gray-900">Your Itinerary</h2>
+                  <p className="text-xs text-gray-500">AI-crafted travel plan</p>
+                </div>
+              </div>
+
+              <div className="prose prose-sm max-w-none">
+                <ReactMarkdown components={mdComponents}>
+                  {result.itinerary}
+                </ReactMarkdown>
+              </div>
+            </div>
+
+            <div className="h-6" />
           </div>
-        </div>
+        )}
       </main>
     </div>
   );

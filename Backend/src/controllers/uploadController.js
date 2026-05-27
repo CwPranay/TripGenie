@@ -1,10 +1,12 @@
 import extractTextFromPDF from "../services/pdfService.js";
 import extractTextFromImage from "../services/ocrService.js";
+import Itinerary from "../models/Itinerary.js"
 
 import {
     extractTravelData,
     generateItinerary,
 } from "../services/geminiService.js";
+
 
 export const uploadFile = async (req, res) => {
     try {
@@ -46,20 +48,26 @@ export const uploadFile = async (req, res) => {
         // AI ITINERARY
         const itinerary =
             await generateItinerary(structuredData);
+        
+        
 
         if (!itinerary) {
             return res.status(500).json({
                 message: "Failed to generate itinerary",
             });
         }
+
+        const savedItinerary = await Itinerary.create({
+            user:req.user._id,
+            originalFile:req.file.filename,
+            extractedText,
+            structuredData,
+            itinerary,
+            shareId:crypto.randomUUID()
+        })
         res.status(200).json({
             success: true,
-
-            extractedText,
-
-            structuredData,
-
-            itinerary,
+            itinerary: savedItinerary,
         });
     }
     catch (error) {

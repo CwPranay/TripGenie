@@ -9,18 +9,23 @@ import ItineraryDetail
 import Login from "./pages/Login";
 import Register from "./pages/Register";
 import Dashboard from "./pages/Dashboard";
+import { Navigate } from "react-router-dom";
 import Upload from "./pages/Upload";
 import SharePage
   from "./pages/SharePage";
-  import Navbar
-from "./components/Navbar";
+import Navbar
+  from "./components/Navbar";
 
 function App() {
 
   return (
     <BrowserRouter>
-       <Navbar />
+      <Navbar />
       <Routes>
+        <Route
+          path="/"
+          element={<Navigate to="/dashboard" />}
+        />
 
         <Route
           path="/login"

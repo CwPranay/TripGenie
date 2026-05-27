@@ -9,7 +9,7 @@ const app = express()
 app.use(cors({
     origin: [
         "http://localhost:5173",
-        "https://tripgeniee-ai.vercel.app"
+        "https://trip-genieai.vercel.app"
     ],
     credentials: true,
 }));

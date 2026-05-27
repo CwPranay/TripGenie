@@ -69,7 +69,6 @@ const Navbar = () => {
     <header className="sticky top-0 z-[999] border-b border-gray-100 bg-white/80 backdrop-blur-md">
       <div className="mx-auto flex max-w-7xl items-center justify-between px-6 py-3.5">
 
-        {/* Logo */}
         <Link
           to="/dashboard"
           className="flex items-center gap-2.5 group"
@@ -82,7 +81,6 @@ const Navbar = () => {
           </span>
         </Link>
 
-        {/* Desktop nav */}
         {user && (
           <nav className="hidden sm:flex items-center gap-1">
             <NavLink to="/dashboard">Dashboard</NavLink>
@@ -90,10 +88,8 @@ const Navbar = () => {
           </nav>
         )}
 
-        {/* Right side */}
         {user && (
           <div className="flex items-center gap-3">
-            {/* User pill — desktop */}
             <div className="hidden sm:flex items-center gap-2.5 rounded-xl border border-gray-100 bg-gray-50 px-3 py-1.5">
               <UserAvatar email={user.email} />
               <span className="max-w-[120px] truncate text-xs font-medium text-gray-600">
@@ -101,7 +97,6 @@ const Navbar = () => {
               </span>
             </div>
 
-            {/* Logout — desktop */}
             <button
               onClick={handleLogout}
               className="hidden cursor-pointer sm:inline-flex items-center rounded-xl border border-gray-200 bg-white px-3.5 py-1.5 text-sm font-medium text-gray-700 hover:bg-gray-50 hover:border-gray-300 active:scale-95 transition-all duration-150"
@@ -109,7 +104,6 @@ const Navbar = () => {
               Logout
             </button>
 
-            {/* Hamburger — mobile */}
             <button
               onClick={() => setMobileOpen((o) => !o)}
               aria-label={mobileOpen ? "Close menu" : "Open menu"}
@@ -121,10 +115,8 @@ const Navbar = () => {
         )}
       </div>
 
-      {/* Mobile drawer */}
       {user && mobileOpen && (
         <div className="sm:hidden border-t border-gray-100 bg-white px-6 py-4 space-y-1">
-          {/* User info */}
           <div className="flex items-center gap-2.5 rounded-xl bg-gray-50 px-3 py-2.5 mb-3">
             <UserAvatar email={user.email} />
             <span className="truncate text-sm font-medium text-gray-700">{user.email}</span>

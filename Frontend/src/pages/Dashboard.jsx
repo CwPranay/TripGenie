@@ -2,7 +2,6 @@ import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import API from "../api/axios";
 
-// ── Heroicons (inline SVGs, zero dependency) ──────────────────────────────────
 const MapPinIcon = () => (
   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="w-4 h-4">
     <path fillRule="evenodd" d="M11.54 22.351l.07.04.028.016a.76.76 0 00.723 0l.028-.015.071-.041a16.975 16.975 0 001.144-.742 19.58 19.58 0 002.683-2.282c1.944-2.083 3.712-5.158 3.712-9.07a8 8 0 10-16 0c0 3.912 1.768 6.987 3.712 9.07a19.58 19.58 0 002.682 2.282 16.958 16.958 0 001.145.742zM12 13.5a3 3 0 100-6 3 3 0 000 6z" clipRule="evenodd" />
@@ -39,7 +38,6 @@ const GlobeIcon = () => (
   </svg>
 );
 
-// ── Destination color palette (deterministic by destination string) ───────────
 const CARD_ACCENTS = [
   { bg: "from-sky-50 to-indigo-50", badge: "bg-sky-100 text-sky-700", dot: "bg-sky-400" },
   { bg: "from-emerald-50 to-teal-50", badge: "bg-emerald-100 text-emerald-700", dot: "bg-emerald-400" },
@@ -64,7 +62,6 @@ const formatDate = (raw) => {
   }
 };
 
-// ── Skeleton loader ───────────────────────────────────────────────────────────
 const SkeletonCard = () => (
   <div className="rounded-3xl border border-gray-100 bg-white p-6 shadow-sm animate-pulse">
     <div className="h-4 w-24 rounded-full bg-gray-100 mb-4" />
@@ -82,7 +79,6 @@ const SkeletonCard = () => (
   </div>
 );
 
-// ── Empty state ───────────────────────────────────────────────────────────────
 const EmptyState = ({ onNew }) => (
   <div className="col-span-full flex flex-col items-center justify-center py-24 px-6 text-center">
     <div className="mb-6 flex h-16 w-16 items-center justify-center rounded-2xl bg-gradient-to-br from-indigo-100 to-sky-100 text-indigo-500">
@@ -102,12 +98,56 @@ const EmptyState = ({ onNew }) => (
   </div>
 );
 
-// ── Trip card ─────────────────────────────────────────────────────────────────
 const TripCard = ({ trip, onClick }) => {
   const dest = trip.structuredData?.destination ?? "Untitled Trip";
   const accent = accentFor(dest);
-  const date = formatDate(trip.structuredData?.startDate);
-  const preview = trip.itinerary?.replace(/#+\s/g, "").slice(0, 160);
+  const startDate = trip.structuredData?.startDate;
+  const endDate = trip.structuredData?.endDate;
+  const flight = trip.structuredData?.flight;
+  const createdAt = trip.createdAt;
+  
+  const getDuration = () => {
+    if (!startDate || !endDate) return null;
+    try {
+      const start = new Date(startDate);
+      const end = new Date(endDate);
+      const days = Math.ceil((end - start) / (1000 * 60 * 60 * 24)) + 1;
+      return `${days} day${days > 1 ? 's' : ''}`;
+    } catch {
+      return null;
+    }
+  };
+
+  const getCreatedDate = () => {
+    if (!createdAt) return null;
+    try {
+      return new Date(createdAt).toLocaleDateString("en-US", { month: "short", day: "numeric" });
+    } catch {
+      return null;
+    }
+  };
+
+  const duration = getDuration();
+  const created = getCreatedDate();
+
+  const generateSummary = () => {
+    const parts = [];
+    if (duration) parts.push(`${duration} AI itinerary`);
+    else parts.push("AI itinerary");
+    
+    parts.push(`for ${dest}`);
+    
+    const features = [];
+    if (trip.structuredData?.hotel) features.push("accommodation");
+    if (trip.structuredData?.activities?.length > 0) features.push("activities");
+    if (flight) features.push("flight details");
+    
+    if (features.length > 0) {
+      parts.push(`including ${features.slice(0, 2).join(", ")}`);
+    }
+    
+    return parts.join(" ") + ".";
+  };
 
   return (
     <article
@@ -116,49 +156,47 @@ const TripCard = ({ trip, onClick }) => {
       tabIndex={0}
       onKeyDown={(e) => e.key === "Enter" && onClick()}
       aria-label={`Open itinerary for ${dest}`}
-      className="group relative rounded-3xl border border-gray-100 bg-white shadow-sm hover:shadow-md hover:-translate-y-0.5 transition-all duration-200 cursor-pointer overflow-hidden focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-indigo-400"
+      className="group relative rounded-3xl border border-gray-100 bg-white shadow-sm hover:shadow-xl hover:-translate-y-1 transition-all duration-300 cursor-pointer overflow-hidden focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-indigo-400"
     >
-      {/* Top color strip */}
-      <div className={`h-1.5 w-full bg-gradient-to-r ${accent.bg} opacity-80`} />
-
-      <div className="p-6">
-        {/* Badge row */}
-        <div className="flex items-center gap-2 mb-4">
-          <span className={`inline-flex items-center gap-1.5 rounded-full px-2.5 py-1 text-xs font-medium ${accent.badge}`}>
-            <MapPinIcon />
+      <div className="h-24 w-full bg-sky-500 relative overflow-hidden">
+        <div className="absolute inset-0 bg-black/5" />
+        <div className="absolute bottom-3 left-4 right-4">
+          <h2 className="text-xl font-bold text-white leading-tight drop-shadow-sm">
             {dest}
-          </span>
+          </h2>
+        </div>
+      </div>
+
+      <div className="p-5">
+        <div className="flex flex-wrap items-center gap-2 mb-3">
+          {duration && (
+            <span className="inline-flex items-center gap-1 rounded-full bg-gray-100 px-2.5 py-1 text-xs font-medium text-gray-700">
+              <CalendarIcon />
+              {duration}
+            </span>
+          )}
+          {flight && (
+            <span className="inline-flex items-center gap-1 rounded-full bg-sky-50 px-2.5 py-1 text-xs font-medium text-sky-700">
+              ✈️ Flight
+            </span>
+          )}
+          {created && (
+            <span className="text-xs text-gray-400">
+              Created {created}
+            </span>
+          )}
         </div>
 
-        {/* Destination heading */}
-        <h2 className="text-lg font-semibold text-gray-900 leading-snug mb-1 group-hover:text-indigo-600 transition-colors duration-150">
-          {dest}
-        </h2>
+        <p className="text-sm text-gray-600 leading-relaxed line-clamp-2 mb-4">
+          {generateSummary()}
+        </p>
 
-        {/* Date */}
-        {date && (
-          <div className="flex items-center gap-1.5 text-xs text-gray-400 mb-4">
-            <CalendarIcon />
-            <span>{date}</span>
-          </div>
-        )}
-
-        {/* Preview text */}
-        {preview && (
-          <p className="text-sm text-gray-500 leading-relaxed line-clamp-3">
-            {preview}
-            {trip.itinerary?.length > 160 ? "…" : ""}
-          </p>
-        )}
-
-        {/* Footer */}
-        <div className="mt-5 flex items-center justify-between">
+        <div className="flex items-center justify-between pt-3 border-t border-gray-50">
           <div className="flex items-center gap-1.5 text-xs text-gray-400">
-            <span className={`inline-block h-1.5 w-1.5 rounded-full ${accent.dot}`} />
             <SparklesIcon />
             <span>AI Generated</span>
           </div>
-          <span className="flex h-8 w-8 items-center justify-center rounded-full bg-gray-50 text-gray-400 group-hover:bg-indigo-50 group-hover:text-indigo-500 transition-colors duration-150">
+          <span className="flex h-8 w-8 items-center justify-center rounded-full bg-gray-50 text-gray-400 group-hover:bg-indigo-500 group-hover:text-white transition-all duration-300">
             <ArrowRightIcon />
           </span>
         </div>
@@ -167,10 +205,6 @@ const TripCard = ({ trip, onClick }) => {
   );
 };
 
-
-
-// ── Dashboard ─────────────────────────────────────────────────────────────────
-// ── Dashboard ─────────────────────────────────────────────────────────────────
 const Dashboard = () => {
   const [itineraries, setItineraries] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -203,14 +237,13 @@ const Dashboard = () => {
   return (
     <div className="min-h-screen bg-gray-50/60 font-sans">
       <main className="mx-auto max-w-7xl px-6 py-10">
-        {/* Page header */}
-        <div className="mb-8 flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
+        <div className="mb-8 flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
           <div>
-            <h1 className="text-2xl font-semibold tracking-tight text-gray-900">
+            <h1 className="text-3xl font-bold tracking-tight text-gray-900">
               My Trips
             </h1>
 
-            <p className="mt-1 text-sm text-gray-500">
+            <p className="mt-2 text-sm text-gray-500">
               {loading
                 ? "Loading your itineraries…"
                 : count === 0
@@ -221,27 +254,15 @@ const Dashboard = () => {
             </p>
           </div>
 
-          <div className="flex items-center gap-3">
-            {count > 0 && (
-              <span className="hidden sm:inline-flex items-center rounded-full bg-gray-100 px-3 py-1 text-xs font-medium text-gray-500">
-                {count} {count === 1 ? "trip" : "trips"}
-              </span>
-            )}
-
-            <button
-              onClick={handleNew}
-              className="inline-flex items-center gap-2 rounded-xl bg-gray-900 px-4 py-2 text-sm font-medium text-white hover:bg-gray-700 active:scale-95 transition-all duration-150 shadow-sm"
-            >
-              <PlusIcon />
-
-              <span className="hidden sm:inline">New Itinerary</span>
-
-              <span className="sm:hidden">New</span>
-            </button>
-          </div>
+          <button
+            onClick={handleNew}
+            className="inline-flex items-center gap-2 rounded-xl bg-gray-900 px-5 py-2.5 text-sm font-medium text-white hover:bg-gray-700 active:scale-95 transition-all duration-150 shadow-sm"
+          >
+            <PlusIcon />
+            <span>New Itinerary</span>
+          </button>
         </div>
 
-        {/* Grid */}
         <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
           {loading ? (
             Array.from({ length: 6 }).map((_, i) => (

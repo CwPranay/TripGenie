@@ -5,7 +5,6 @@ import { useNavigate } from "react-router-dom";
 
 import API from "../api/axios";
 
-// ── Icons ─────────────────────────────────────────────────────────────
 const UploadIcon = () => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
@@ -96,7 +95,6 @@ const Upload = () => {
           <ArrowLeftIcon/>
           Back to trips
         </button>
-        {/* Header */}
         <div className="mb-10 flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
           <div>
             <h1 className="text-3xl font-semibold tracking-tight text-gray-900">
@@ -112,9 +110,7 @@ const Upload = () => {
           
         </div>
 
-        {/* Upload Card */}
         <div className="rounded-3xl border border-gray-100 bg-white shadow-sm overflow-hidden">
-          {/* Top Accent */}
           <div className="h-1.5 w-full bg-sky-400 " />
 
           <div className="p-8">
@@ -184,7 +180,6 @@ const Upload = () => {
               </div>
             </div>
 
-            {/* Loading */}
             {loading && (
               <div className="mt-8 rounded-2xl border border-indigo-100 bg-indigo-50 p-5">
                 <div className="flex items-center gap-3 text-indigo-700">
@@ -203,10 +198,8 @@ const Upload = () => {
               </div>
             )}
 
-            {/* Results */}
             {result && (
               <div className="mt-10 grid gap-6 lg:grid-cols-2">
-                {/* Trip Details */}
                 <div className="rounded-3xl border border-gray-100 bg-white p-6 shadow-sm">
                   <div className="flex items-center gap-2 mb-5">
                     <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-sky-100 text-sky-600">
@@ -235,7 +228,6 @@ const Upload = () => {
                   </div>
                 </div>
 
-                {/* AI Itinerary */}
                 <div className="rounded-3xl border border-gray-100 bg-white p-6 shadow-sm">
                   <div className="flex items-center gap-2 mb-5">
                     <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-indigo-100 text-indigo-600">

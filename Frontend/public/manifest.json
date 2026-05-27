@@ -1,0 +1,43 @@
+{
+  "name": "TripGenie - AI Travel Itinerary Generator",
+  "short_name": "TripGenie",
+  "description": "Transform your travel documents into personalized itineraries with AI",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#0ea5e9",
+  "orientation": "portrait-primary",
+  "icons": [
+    {
+      "src": "/favicon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "/icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ],
+  "categories": ["travel", "productivity", "lifestyle"],
+  "screenshots": [
+    {
+      "src": "/screenshots/dashboard.png",
+      "sizes": "1280x720",
+      "type": "image/png",
+      "label": "Dashboard view showing all trips"
+    },
+    {
+      "src": "/screenshots/upload.png",
+      "sizes": "1280x720",
+      "type": "image/png",
+      "label": "Upload travel documents"
+    }
+  ]
+}

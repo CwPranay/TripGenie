@@ -91,13 +91,13 @@ const Skeleton = () => (
 const DetailRow = ({ icon: Icon, label, value, accent }) => {
   if (!value) return null;
   return (
-    <div className={`flex items-start gap-3 rounded-2xl p-4 ${accent}`}>
-      <span className="mt-0.5 text-gray-400">
+    <div className={`flex items-start gap-3 rounded-xl p-4 ${accent}`}>
+      <span className="mt-0.5 text-sky-600">
         <Icon />
       </span>
       <div className="min-w-0">
-        <p className="text-xs font-medium text-gray-400 uppercase tracking-wide mb-0.5">{label}</p>
-        <p className="text-sm font-medium text-gray-800 leading-snug">{value}</p>
+        <p className="text-xs font-semibold text-gray-500 uppercase tracking-wide mb-1">{label}</p>
+        <p className="text-sm font-medium text-gray-900 leading-snug">{value}</p>
       </div>
     </div>
   );
@@ -106,40 +106,51 @@ const DetailRow = ({ icon: Icon, label, value, accent }) => {
 
 const mdComponents = {
   h1: ({ children }) => (
-    <h1 className="text-xl font-semibold text-gray-900 mt-8 mb-3 first:mt-0">{children}</h1>
+    <h1 className="text-2xl font-bold text-gray-900 mt-8 mb-4 first:mt-0 pb-3 border-b-2 border-indigo-100">{children}</h1>
   ),
   h2: ({ children }) => (
-    <h2 className="text-lg font-semibold text-gray-900 mt-7 mb-2.5 first:mt-0 flex items-center gap-2">
-      <span className="inline-block h-1.5 w-1.5 rounded-full bg-indigo-400 flex-shrink-0" />
+    <h2 className="text-xl font-bold text-gray-900 mt-8 mb-3 first:mt-0 flex items-center gap-2.5">
+      <span className="inline-block h-2 w-2 rounded-full bg-indigo-500 flex-shrink-0" />
       {children}
     </h2>
   ),
   h3: ({ children }) => (
-    <h3 className="text-base font-semibold text-gray-800 mt-5 mb-2">{children}</h3>
+    <h3 className="text-lg font-semibold text-gray-800 mt-6 mb-2.5 flex items-center gap-2">
+      <span className="inline-block h-1.5 w-1.5 rounded-full bg-sky-400 flex-shrink-0" />
+      {children}
+    </h3>
   ),
   p: ({ children }) => (
-    <p className="text-sm text-gray-600 leading-relaxed mb-3">{children}</p>
+    <p className="text-sm text-gray-700 leading-relaxed mb-4">{children}</p>
   ),
   ul: ({ children }) => (
-    <ul className="space-y-1.5 mb-4 ml-1">{children}</ul>
+    <ul className="space-y-2 mb-5 ml-1">{children}</ul>
   ),
   ol: ({ children }) => (
-    <ol className="space-y-1.5 mb-4 ml-1 list-decimal list-inside">{children}</ol>
+    <ol className="space-y-2 mb-5 ml-1 list-decimal list-inside">{children}</ol>
   ),
   li: ({ children }) => (
-    <li className="flex items-start gap-2 text-sm text-gray-600 leading-relaxed">
-      <span className="mt-1.5 h-1.5 w-1.5 rounded-full bg-gray-300 flex-shrink-0" />
-      <span>{children}</span>
+    <li className="flex items-start gap-2.5 text-sm text-gray-700 leading-relaxed pl-1">
+      <span className="mt-2 h-1.5 w-1.5 rounded-full bg-indigo-400 flex-shrink-0" />
+      <span className="flex-1">{children}</span>
     </li>
   ),
   strong: ({ children }) => (
-    <strong className="font-semibold text-gray-800">{children}</strong>
+    <strong className="font-semibold text-gray-900">{children}</strong>
   ),
-  hr: () => <hr className="my-6 border-gray-100" />,
+  em: ({ children }) => (
+    <em className="italic text-gray-600">{children}</em>
+  ),
+  hr: () => <hr className="my-8 border-gray-200" />,
   blockquote: ({ children }) => (
-    <blockquote className="border-l-2 border-indigo-200 pl-4 my-4 text-sm text-gray-500 italic">
+    <blockquote className="border-l-4 border-indigo-300 bg-indigo-50 pl-4 py-3 my-5 text-sm text-gray-700 italic rounded-r-lg">
       {children}
     </blockquote>
+  ),
+  code: ({ children }) => (
+    <code className="bg-gray-100 text-indigo-600 px-1.5 py-0.5 rounded text-xs font-mono">
+      {children}
+    </code>
   ),
 };
 
@@ -178,94 +189,98 @@ const ItineraryDetail = () => {
 
   return (
     <div className="min-h-screen bg-gray-50/60 py-10 px-4">
-      <div className="max-w-4xl mx-auto space-y-5">
+      <div className="max-w-4xl mx-auto space-y-6">
 
-        {/* Back */}
         <button
           onClick={() => navigate(-1)}
-          className="inline-flex items-center cursor-pointer gap-1.5 text-sm text-gray-900 hover:text-gray-700 transition-colors duration-150 mb-1"
+          className="inline-flex items-center cursor-pointer gap-1.5 text-sm text-gray-600 hover:text-gray-900 transition-colors duration-150 mb-2 group"
         >
           <ArrowLeftIcon />
-          Back to trips
+          <span className="group-hover:underline">Back to trips</span>
         </button>
 
-        
-        <div className="rounded-3xl border border-gray-100 bg-white shadow-sm overflow-hidden">
-          
-        
-          <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-5 p-8">
-            <div>
-              <p className="text-xs font-medium text-indigo-500 uppercase tracking-widest mb-2">
-                Itinerary
-              </p>
-              <h1 className="text-3xl font-semibold tracking-tight text-gray-900 leading-tight">
+        <div className="rounded-3xl border border-gray-200 bg-white shadow-lg overflow-hidden">
+          <div className="h-32 bg-sky-500 relative">
+            <div className="absolute inset-0 bg-black/5" />
+            <div className="absolute bottom-0 left-0 right-0 p-8 pb-6">
+              <div className="inline-flex items-center gap-2 rounded-full bg-white/20 backdrop-blur-sm px-3 py-1 text-xs font-medium text-white mb-3 border border-white/30">
+                <SparklesIcon />
+                AI Generated Itinerary
+              </div>
+              <h1 className="text-3xl font-bold tracking-tight text-white leading-tight drop-shadow-lg">
                 {destination ?? "Untitled Trip"}
               </h1>
+            </div>
+          </div>
+          
+          <div className="p-8 pt-6">
+            <div className="flex flex-wrap items-center gap-3 mb-6">
               {startDate && (
-                <div className="flex items-center gap-1.5 mt-2.5 text-sm text-gray-400">
+                <div className="flex items-center gap-2 text-sm text-gray-600 bg-gray-50 rounded-lg px-3 py-2">
                   <CalendarIcon />
-                  <span>{startDate}</span>
+                  <span className="font-medium">{startDate}</span>
                 </div>
               )}
+              <button
+                onClick={handleCopy}
+                className={`flex-shrink-0 inline-flex items-center gap-2 rounded-lg px-4 py-2 text-sm font-medium transition-all duration-200 ${
+                  copied
+                    ? "bg-emerald-50 text-emerald-600 border border-emerald-200"
+                    : "bg-gray-900 text-white hover:bg-gray-700 active:scale-95 shadow-sm"
+                }`}
+              >
+                {copied ? <CheckIcon /> : <LinkIcon />}
+                {copied ? "Copied!" : "Share trip"}
+              </button>
             </div>
-
-           
-            <button
-              onClick={handleCopy}
-              className={`flex-shrink-0 inline-flex items-center gap-2 rounded-xl px-4 py-2.5 text-sm font-medium transition-all duration-200 ${
-                copied
-                  ? "bg-emerald-50 text-emerald-600 border border-emerald-200"
-                  : "bg-gray-900 text-white hover:bg-gray-700 active:scale-95 shadow-sm"
-              }`}
-            >
-              {copied ? <CheckIcon /> : <LinkIcon />}
-              {copied ? "Copied!" : "Copy link"}
-            </button>
           </div>
         </div>
 
-        
-        <div className="rounded-3xl border border-gray-100 bg-white shadow-sm p-8">
-          <h2 className="text-base font-semibold text-gray-900 mb-5 flex items-center gap-2">
-            <span className="flex h-6 w-6 items-center justify-center rounded-lg bg-gray-100 text-gray-500">
+        <div className="rounded-3xl border border-gray-200 bg-white shadow-lg p-8">
+          <div className="flex items-center gap-3 mb-6 pb-4 border-b border-gray-100">
+            <span className="flex h-10 w-10 items-center justify-center rounded-xl bg-sky-500 text-white shadow-sm">
               <CalendarIcon />
             </span>
-            Trip Details
-          </h2>
+            <div>
+              <h2 className="text-lg font-bold text-gray-900">Trip Details</h2>
+              <p className="text-xs text-gray-500">Essential information</p>
+            </div>
+          </div>
 
-          <div className="grid sm:grid-cols-2 gap-3">
+          <div className="grid sm:grid-cols-2 gap-4">
             <DetailRow
               icon={PlaneIcon}
               label="Flight"
               value={trip.structuredData?.flight}
-              accent="bg-sky-50/60"
+              accent="bg-sky-50 border border-sky-100"
             />
             <DetailRow
               icon={HotelIcon}
               label="Hotel"
               value={trip.structuredData?.hotel || "Not specified"}
-              accent="bg-indigo-50/60"
+              accent="bg-indigo-50 border border-indigo-100"
             />
           </div>
         </div>
 
-       
-        <div className="rounded-3xl border border-gray-100 bg-white shadow-sm p-8">
-          <h2 className="text-base font-semibold text-gray-900 mb-6 flex items-center gap-2">
-            <span className="flex h-6 w-6 items-center justify-center rounded-lg bg-indigo-50 text-indigo-500">
+        <div className="rounded-3xl border border-gray-200 bg-white shadow-lg p-8">
+          <div className="flex items-center gap-3 mb-8 pb-4 border-b border-gray-100">
+            <span className="flex h-10 w-10 items-center justify-center rounded-xl bg-sky-500 text-white shadow-sm">
               <SparklesIcon />
             </span>
-            AI Itinerary
-          </h2>
+            <div>
+              <h2 className="text-lg font-bold text-gray-900">Your Itinerary</h2>
+              <p className="text-xs text-gray-500">AI-crafted travel plan</p>
+            </div>
+          </div>
 
-          <div className="divide-y divide-gray-50">
+          <div className="prose prose-sm max-w-none">
             <ReactMarkdown components={mdComponents}>
               {trip.itinerary}
             </ReactMarkdown>
           </div>
         </div>
 
-        
         <div className="h-6" />
       </div>
     </div>

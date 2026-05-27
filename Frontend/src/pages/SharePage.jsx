@@ -66,58 +66,66 @@ const SharePage = () => {
   return (
     <div className="min-h-screen bg-gray-50/60 py-10 px-6">
       <div className="max-w-5xl mx-auto space-y-6">
-        {/* Header */}
-        <div className="overflow-hidden rounded-3xl border border-gray-100 bg-white shadow-sm">
-          <div className="h-1.5 w-full bg-sky-400" />
-
-          <div className="p-8">
-            <div className="inline-flex items-center rounded-full bg-indigo-50 px-3 py-1 text-xs font-medium text-indigo-600 mb-5">
-              Shared AI Itinerary
+        <div className="overflow-hidden rounded-3xl border border-gray-200 bg-white shadow-lg">
+          <div className="h-32 bg-sky-500 relative">
+            <div className="absolute inset-0 bg-black/5" />
+            <div className="absolute bottom-0 left-0 right-0 p-8 pb-6">
+              <div className="inline-flex items-center rounded-full bg-white/20 backdrop-blur-sm px-3 py-1.5 text-xs font-semibold text-white mb-3 border border-white/30">
+                🌍 Shared Itinerary
+              </div>
+              <h1 className="text-3xl font-bold tracking-tight text-white leading-tight drop-shadow-lg">
+                {trip?.structuredData?.destination ||
+                  "Untitled Trip"}
+              </h1>
             </div>
+          </div>
 
-            <h1 className="text-4xl font-semibold tracking-tight text-gray-900">
-              {trip?.structuredData?.destination ||
-                "Untitled Trip"}
-            </h1>
-
-            <p className="mt-3 text-sm text-gray-500 leading-relaxed max-w-2xl">
+          <div className="p-8 pt-6">
+            <p className="text-sm text-gray-600 leading-relaxed max-w-2xl mb-6">
               Explore this AI-generated travel itinerary shared with you.
             </p>
 
-            <div className="mt-6 flex flex-wrap gap-3">
+            <div className="flex flex-wrap gap-3">
               {trip?.structuredData?.startDate && (
-                <div className="rounded-xl bg-gray-100 px-4 py-2 text-sm text-gray-600">
-                  Start Date:{" "}
-                  {new Date(
-                    trip.structuredData.startDate
-                  ).toLocaleDateString()}
+                <div className="rounded-xl bg-sky-50 border border-sky-100 px-4 py-2.5 text-sm text-gray-700">
+                  <span className="font-semibold text-gray-500 text-xs uppercase tracking-wide block mb-0.5">Start Date</span>
+                  <span className="font-medium">
+                    {new Date(
+                      trip.structuredData.startDate
+                    ).toLocaleDateString("en-US", { month: "long", day: "numeric", year: "numeric" })}
+                  </span>
                 </div>
               )}
 
               {trip?.structuredData?.destination && (
-                <div className="rounded-xl bg-gray-100 px-4 py-2 text-sm text-gray-600">
-                  Destination:{" "}
-                  {trip.structuredData.destination}
+                <div className="rounded-xl bg-indigo-50 border border-indigo-100 px-4 py-2.5 text-sm text-gray-700">
+                  <span className="font-semibold text-gray-500 text-xs uppercase tracking-wide block mb-0.5">Destination</span>
+                  <span className="font-medium">
+                    {trip.structuredData.destination}
+                  </span>
                 </div>
               )}
             </div>
           </div>
         </div>
 
-        {/* Itinerary */}
-        <div className="overflow-hidden rounded-3xl border border-gray-100 bg-white shadow-sm">
+        <div className="overflow-hidden rounded-3xl border border-gray-200 bg-white shadow-lg">
           <div className="p-8">
-            <div className="mb-6">
-              <h2 className="text-2xl font-semibold text-gray-900">
-                Travel Plan
-              </h2>
-
-              <p className="mt-2 text-sm text-gray-500">
-                Complete AI-generated itinerary details.
-              </p>
+            <div className="flex items-center gap-3 mb-8 pb-4 border-b border-gray-100">
+              <span className="flex h-10 w-10 items-center justify-center rounded-xl bg-sky-500 text-white shadow-sm">
+                ✨
+              </span>
+              <div>
+                <h2 className="text-xl font-bold text-gray-900">
+                  Travel Plan
+                </h2>
+                <p className="text-sm text-gray-500">
+                  Complete AI-generated itinerary details
+                </p>
+              </div>
             </div>
 
-            <div className="prose prose-sm sm:prose lg:prose-lg max-w-none prose-headings:text-gray-900 prose-p:text-gray-600 prose-strong:text-gray-900 prose-li:text-gray-600">
+            <div className="prose prose-sm sm:prose lg:prose-lg max-w-none prose-headings:text-gray-900 prose-p:text-gray-700 prose-strong:text-gray-900 prose-li:text-gray-700">
               <ReactMarkdown>
                 {trip?.itinerary || ""}
               </ReactMarkdown>

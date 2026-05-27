@@ -11,7 +11,7 @@
 [![React](https://img.shields.io/badge/React-19.2.6-blue.svg)](https://reactjs.org/)
 [![MongoDB](https://img.shields.io/badge/MongoDB-Latest-green.svg)](https://www.mongodb.com/)
 
-[Features](#features) • [Demo](#demo) • [Installation](#installation) • [Usage](#usage) • [Tech Stack](#tech-stack) • [API Documentation](#api-documentation) • [Contributing](#contributing)
+
 
 </div>
 
@@ -423,9 +423,7 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 ---
 
-## 📞 Support
-
-For support, email support@tripgenie.app or join our [Discord community](https://discord.gg/tripgenie).
+=
 
 ---
 
@@ -442,18 +440,6 @@ For support, email support@tripgenie.app or join our [Discord community](https:/
 
 ---
 
-## 📊 Project Status
-
-**Current Version**: 1.0.0  
-**Status**: Active Development  
-**Last Updated**: May 2026
-
 ---
 
-<div align="center">
 
-Made with ❤️ by the TripGenie Team
-
-[Website](https://tripgenie.app) • [Documentation](https://docs.tripgenie.app) • [Blog](https://blog.tripgenie.app)
-
-</div>

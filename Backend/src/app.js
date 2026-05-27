@@ -6,12 +6,18 @@ import uploadRoutes from "./routes/uploadRoutes.js";
 import itineraryRoutes from "./routes/itineraryRoutes.js"
 
 const app = express()
-app.use(cors())
+app.use(cors({
+    origin: [
+        "http://localhost:5173",
+        "https://tripgeniee-ai.vercel.app"
+    ],
+    credentials: true,
+}));
 app.use(express.json())
 
-app.use("/api/auth",authRoutes)
+app.use("/api/auth", authRoutes)
 app.use("/api/upload", uploadRoutes);
-app.use("/api/itineraries",itineraryRoutes)
+app.use("/api/itineraries", itineraryRoutes)
 
 export default app;
 

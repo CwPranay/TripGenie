@@ -82,6 +82,8 @@
 
 ### Screenshots
 
+> **Note:** Add your application screenshots to the `docs/screenshots/` folder
+
 #### Dashboard
 ![Dashboard](docs/screenshots/dashboard.png)
 *Manage all your trips in one beautiful interface*
@@ -136,7 +138,7 @@
 ### Step 1: Clone the Repository
 
 ```bash
-git clone https://github.com/yourusername/tripgenie.git
+git clone https://github.com/cwpranay/tripgenie.git
 cd tripgenie
 ```
 
@@ -408,11 +410,7 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 ---
 
-## 👥 Authors
 
-- **Your Name** - *Initial work* - [YourGitHub](https://github.com/yourusername)
-
----
 
 ## 🙏 Acknowledgments
 
